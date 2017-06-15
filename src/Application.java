@@ -74,11 +74,11 @@ public class Application extends JFrame {
 		lblSlider.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tabMain.add(lblSlider, "cell 3 9 3 1,alignx center");
 		
-		btnOne = new JButton("Get Puppet");
+		btnOne = new JButton("Puppetiness");
 
 		tabMain.add(btnOne, "cell 3 6,grow");
 		
-		btnTwo = new JButton("Get Puppiety");
+		btnTwo = new JButton("Puppet Name");
 		tabMain.add(btnTwo, "cell 5 6,grow");
 		
 		
