@@ -63,14 +63,14 @@ public class Application extends JFrame {
 		lblPuppet.setFont(new Font("Tahoma", Font.BOLD, 38));
 		tabMain.add(lblPuppet, "cell 2 1 5 1,alignx center,aligny center");
 		
-		label = new JLabel("Puppetiness");
+		label = new JLabel("Puppet Name");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tabMain.add(label, "cell 3 3 3 1,alignx center,aligny bottom");
 		
 		textArea = new JTextArea();
 		tabMain.add(textArea, "cell 3 4 3 1,growx,aligny center");
 		
-		lblSlider = new JLabel("Puppet Name");
+		lblSlider = new JLabel("Puppetiness");
 		lblSlider.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tabMain.add(lblSlider, "cell 3 9 3 1,alignx center");
 		
