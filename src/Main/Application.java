@@ -1,29 +1,25 @@
+package Main;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import net.miginfocom.swing.MigLayout;
-import java.awt.Color;
 
 public class Application extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTabbedPane tabbedPane;
+	private static JTabbedPane tabbedPane;
 	
 	private JPanel contentPane;
 	
@@ -40,7 +36,9 @@ public class Application extends JFrame {
 	public Application() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 570, 520);
-		setTitle("Puppet");
+		setTitle("Puppet Creator");
+		//this.setMaximumSize(new Dimension(1000,1000));
+		//this.setMinimumSize(new Dimension(400, 400));
 		
 		//Content Pane
 		contentPane = new JPanel();
@@ -76,17 +74,18 @@ public class Application extends JFrame {
 		tabMain.add(lblYouHave, "cell 4 3");
 		
 		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 20));
-		tabMain.add(btnCreate, "cell 4 5,growx,aligny center");
+		tabMain.add(btnCreate, "cell 4 5,grow");
 		
-		btnReset.setFont(new Font("Tahoma", Font.BOLD, 20));
-		tabMain.add(btnReset, "cell 4 7,growx,aligny center");
+		
 		
 		//Settings Tab
 		tabSettings = new JPanel();
-		tabSettings.setLayout(new MigLayout("", "[]", "[]"));
+		tabSettings.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][]"));
 		tabbedPane.addTab("Settings", null, tabSettings, null);
+		btnReset.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabSettings.add(btnReset, "cell 4 7,growx,aligny center");
 		
-		loadTabs();
+		Save.loadTabs();
 		
 		//Listeners
 		btnCreate.addActionListener(new ActionListener() {
@@ -100,18 +99,15 @@ public class Application extends JFrame {
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Save.reset();
+				JFrame optionPane = new JFrame();
+				JOptionPane.showMessageDialog(optionPane, "Deleted all Puppets.");
 			}
 		});
 		
 		
 	}
 
-	private void loadTabs() {
-		Save.load();
-		ArrayList<Puppet> list = Save.getList();
-		
-		for(Puppet p : list) {
-			tabbedPane.add(p);
-		}
+	public static JTabbedPane getTabbedPane() {
+		return tabbedPane;
 	}
 }

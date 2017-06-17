@@ -1,13 +1,7 @@
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+package Message;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSlider;
-import javax.swing.JTextArea;
-
 import java.awt.Font;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class NameInput {
 	
