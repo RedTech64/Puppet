@@ -1,20 +1,23 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JTabbedPane;
-import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import net.miginfocom.swing.MigLayout;
+import java.awt.Color;
 
 public class Application extends JFrame {
 
@@ -28,84 +31,87 @@ public class Application extends JFrame {
 	private JPanel tabSettings;
 	
 	private JLabel lblPuppet;
-	private JLabel lblSlider;
 	
-	private JButton btnOne;
-	private JButton btnTwo;
-	
-	private JSlider slider;
-	private JTextArea textArea;
-	private JLabel label;
+	private JButton btnCreate;
+	private JButton btnReset;
 	private JLabel lblPuppetiness;
+	private JLabel lblYouHave;
 	
 	public Application() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 570, 520);
 		setTitle("Puppet");
 		
+		//Content Pane
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
+		setContentPane(contentPane);
 		
+		//Tabbed Pane
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
 		
+		//Main Tab
 		tabMain = new JPanel();
-		tabbedPane.addTab("Puppet", null, tabMain, null);
+		lblPuppet = new JLabel("Welcome to Puppet Creator!");
+		lblPuppetiness = new JLabel("50%");
+		lblYouHave = new JLabel("You have  ");
+		btnCreate = new JButton("Create new Puppet");
+		btnReset = new JButton("Reset");
+		
 		tabMain.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][]"));
 		
-		tabSettings = new JPanel();
-		tabbedPane.addTab("Settings", null, tabSettings, null);
-		tabSettings.setLayout(new MigLayout("", "[]", "[]"));
 		
-		lblPuppet = new JLabel("Welcome to the Puppet!");
-		lblPuppet.setFont(new Font("Tahoma", Font.BOLD, 38));
+		lblPuppet.setFont(new Font("Tahoma", Font.BOLD, 35));
+		
 		tabMain.add(lblPuppet, "cell 2 1 5 1,alignx center,aligny center");
+		tabMain.add(lblPuppetiness, "cell 3 11 3 1,alignx center,aligny center");
 		
-		label = new JLabel("Puppet Name");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tabMain.add(label, "cell 3 3 3 1,alignx center,aligny bottom");
+		tabbedPane.addTab("Puppet", null, tabMain, null);
 		
-		textArea = new JTextArea();
-		tabMain.add(textArea, "cell 3 4 3 1,growx,aligny center");
-		
-		lblSlider = new JLabel("Puppetiness");
-		lblSlider.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tabMain.add(lblSlider, "cell 3 9 3 1,alignx center");
-		
-		btnOne = new JButton("Puppetiness");
 
-		tabMain.add(btnOne, "cell 3 6,grow");
 		
-		btnTwo = new JButton("Puppet Name");
-		tabMain.add(btnTwo, "cell 5 6,grow");
+		lblYouHave.setFont(new Font("Tahoma", Font.BOLD, 18));
+		tabMain.add(lblYouHave, "cell 4 3");
 		
+		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabMain.add(btnCreate, "cell 4 5,growx,aligny center");
 		
-		slider = new JSlider();
+		btnReset.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabMain.add(btnReset, "cell 4 7,growx,aligny center");
 		
-		tabMain.add(slider, "cell 3 10 3 1,alignx center");
+		//Settings Tab
+		tabSettings = new JPanel();
+		tabSettings.setLayout(new MigLayout("", "[]", "[]"));
+		tabbedPane.addTab("Settings", null, tabSettings, null);
 		
-		lblPuppetiness = new JLabel("50%");
-		tabMain.add(lblPuppetiness, "cell 4 11,alignx center,aligny center");
+		loadTabs();
 		
-		
-		btnOne.addActionListener(new ActionListener() {
+		//Listeners
+		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(contentPane, "Your puppetiness is " + slider.getValue() + "%");
+			Puppet tab = new Puppet();
+				tabbedPane.add(tab);
+				Save.add(tab);
 			}
 		});
 		
-		btnTwo.addActionListener(new ActionListener() {
+		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(contentPane, "Your puppet name is " + textArea.getText());
+				Save.reset();
 			}
 		});
 		
-		slider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				lblPuppetiness.setText(slider.getValue()+"%");
-			}
-		});
+		
+	}
+
+	private void loadTabs() {
+		Save.load();
+		ArrayList<Puppet> list = Save.getList();
+		
+		for(Puppet p : list) {
+			tabbedPane.add(p);
+		}
 	}
 }
