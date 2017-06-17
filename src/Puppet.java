@@ -16,52 +16,63 @@ import java.awt.event.ActionEvent;
 public class Puppet extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	JButton btnSave = new JButton();
-	JLabel lblPuppetiness = new JLabel();
-	JLabel lblName = new JLabel();
-	JLabel lblValue = new JLabel();
-	JSlider slider = new JSlider();
-	JTextArea text = new JTextArea();
+	private String name;
+	private int p;
+	private JButton btnSave = new JButton("Save");
+	private JLabel lblPuppetiness = new JLabel("Puppetiness");
+	private JLabel lblName = new JLabel("Puppet Name");
+	private JLabel lblNameValue = new JLabel("Name Puppet");
+	private JLabel lblPuppetinessValue = new JLabel("50%");
+	private JButton btnEditName = new JButton("Edit Name");
+	private JButton btnEditPuppetiness = new JButton("Edit Puppetiness");
 	
 	public Puppet() {
 		super();
 		id = Save.getID();
-		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][][grow][grow][grow][][grow][grow][]"));
-		
-		lblPuppetiness.setText("Puppetiness");
-		lblName.setText("Puppet Name");
-		lblValue.setText("50%");
+		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
 		btnSave.setText("Save");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPuppetiness.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNameValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		this.add(btnSave, "cell 4 12,grow");
-		this.add(lblPuppetiness, "cell 4 8,alignx center");
-		this.add(lblName, "cell 4 6,alignx center");
-		this.add(lblValue, "cell 4 10,alignx center");
-		this.add(slider, "cell 4 9,alignx center");
-		this.add(text, "cell 4 7,growx,aligny center");
-		slider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				lblValue.setText(slider.getValue()+"%");
-			}
-		});
+		lblPuppetiness.setFont(new Font("Tahoma", Font.PLAIN, 22));
+	
+		lblPuppetinessValue.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		this.add(btnSave, "cell 4 9,grow");
+		this.add(lblName, "cell 4 1,grow");
+		add(lblPuppetinessValue, "cell 4 6,grow");
+		add(btnEditPuppetiness, "cell 4 7,alignx center,aligny center");
+		this.add(lblPuppetiness, "cell 4 5,grow");
+		add(lblNameValue, "cell 4 2,grow");
+		add(btnEditName, "cell 4 3,alignx center,aligny center");
 		
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Save.save();
-				getParent().setName(text.getText());
+			}
+		});
+		
+		btnEditPuppetiness.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				p = PuppetinessInput.getName();
+				lblPuppetinessValue.setText(p+"%");
+			}
+		});
+		
+		btnEditName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				name = NameInput.getName();
+				lblNameValue.setText(name);
 			}
 		});
 	}
 	public String getName() {
-		return lblName.getText();
+		return lblNameValue.getText();
 	}
 	
 	public int getPuppetiness() {
-		return slider.getValue();
+		return p;
 	}
 	
 	public int getID() {
