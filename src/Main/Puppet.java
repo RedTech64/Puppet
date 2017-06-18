@@ -74,6 +74,7 @@ public class Puppet extends JPanel {
 				Save.clear(getID());
 				Application.getTabbedPane().removeTabAt(Application.getTabbedPane().getSelectedIndex());
 				Application.getPuppetAmount().setText("You have " + (Application.getTabbedPane().getTabCount()-2) + " puppets!");
+				Save.save();
 			}
 		});
 		btnEditPuppetiness.addActionListener(new ActionListener() {

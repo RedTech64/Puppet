@@ -9,8 +9,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 public class Save {
 	static List<Puppet> list = new ArrayList<Puppet>();
 	
@@ -23,8 +21,7 @@ public class Save {
 			
 			save.writeInt(list.size());
 			for(int i = 0; i < list.size(); i++)
-				//System.out.println(list.get(i));
-				save.writeObject(new JPanel());
+				save.writeObject(list.get(i));
 			save.close();
 			Message.Log.send(Message.Log.MESSAGE, "Save completed.");
 			
