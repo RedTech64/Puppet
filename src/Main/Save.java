@@ -9,31 +9,36 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 public class Save {
 	static List<Puppet> list = new ArrayList<Puppet>();
 	
 	public static void save() {
 		Message.Log.send(Message.Log.MESSAGE, "Saving Puppet List " + list);
 		try {
+			Message.Log.send(Message.Log.MESSAGE, "Save started...");
 			FileOutputStream file = new FileOutputStream("save.puppet");
 			ObjectOutputStream save = new ObjectOutputStream(file);
 			
 			save.writeInt(list.size());
 			for(int i = 0; i < list.size(); i++)
-				save.writeObject(list.get(i));
+				//System.out.println(list.get(i));
+				save.writeObject(new JPanel());
 			save.close();
+			Message.Log.send(Message.Log.MESSAGE, "Save completed.");
 			
 		} catch (FileNotFoundException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (IOException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	
 	public static void load() {
 		try {
+			Message.Log.send(Message.Log.MESSAGE, "Loading started...");
 			FileInputStream file = new FileInputStream("save.puppet");
-			
 			ObjectInputStream load = new ObjectInputStream(file);
 			
 			int n = load.readInt();
@@ -43,24 +48,28 @@ public class Save {
 				if(in != null)
 				list.add(new Puppet((Puppet) in));
 			}
-			
 			load.close();
+			
+			Message.Log.send(Message.Log.MESSAGE, "Loading completed.");
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found, no puppets saved.");
+			Message.Log.send(Message.Log.WARNING, "Save file not found!");
 		} catch (IOException e) {
-			System.out.println("IO Exception thrown at Puppet.load()");
+			Message.Log.send(Message.Log.ERROR, "IO Exception thrown at load.");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void loadTabs() {
+		Message.Log.send(Message.Log.MESSAGE, "Loading tabs...");
 		Save.load();
 		List<Puppet> list = Save.getList();
 		
 		for(Puppet p : list) {
 			Application.getTabbedPane().add(p);
 		}
+		
+		Message.Log.send(Message.Log.MESSAGE, "Loading tabs completed.");
 	}
 	
 	public static void reset() {

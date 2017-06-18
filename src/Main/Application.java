@@ -30,12 +30,11 @@ public class Application extends JFrame {
 	
 	private JButton btnCreate;
 	private JButton btnReset;
-	private JLabel lblPuppetiness;
-	private JLabel lblYouHave;
+	private static JLabel lblPuppetNumber;
 	
 	public Application() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 570, 520);
+		setBounds(100, 100, 500, 450);
 		setTitle("Puppet Creator");
 		//this.setMaximumSize(new Dimension(1000,1000));
 		//this.setMinimumSize(new Dimension(400, 400));
@@ -53,30 +52,19 @@ public class Application extends JFrame {
 		//Main Tab
 		tabMain = new JPanel();
 		lblPuppet = new JLabel("Welcome to Puppet Creator!");
-		lblPuppetiness = new JLabel("50%");
-		lblYouHave = new JLabel("You have  ");
 		btnCreate = new JButton("Create new Puppet");
 		btnReset = new JButton("Reset");
 		
 		tabMain.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][]"));
 		
+		lblPuppet.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		lblPuppet.setFont(new Font("Tahoma", Font.BOLD, 35));
-		
-		tabMain.add(lblPuppet, "cell 2 1 5 1,alignx center,aligny center");
-		tabMain.add(lblPuppetiness, "cell 3 11 3 1,alignx center,aligny center");
+		tabMain.add(lblPuppet, "cell 0 1 9 1,alignx center,growy");
 		
 		tabbedPane.addTab("Puppet", null, tabMain, null);
 		
-
-		
-		lblYouHave.setFont(new Font("Tahoma", Font.BOLD, 18));
-		tabMain.add(lblYouHave, "cell 4 3");
-		
 		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabMain.add(btnCreate, "cell 4 5,grow");
-		
-		
 		
 		//Settings Tab
 		tabSettings = new JPanel();
@@ -87,17 +75,24 @@ public class Application extends JFrame {
 		
 		Save.loadTabs();
 		
+		lblPuppetNumber = new JLabel("You have "+ (tabbedPane.getTabCount()-2) + " puppets!");
+		lblPuppetNumber.setFont(new Font("Tahoma", Font.BOLD, 18));
+		tabMain.add(lblPuppetNumber, "cell 4 3,alignx center,growy");
+		
 		//Listeners
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			Message.Log.send(Message.Log.EVENT, "Create Puppet");
 			Puppet tab = new Puppet();
 				tabbedPane.add(tab);
 				Save.add(tab);
+				lblPuppetNumber.setText("You have " + (tabbedPane.getTabCount()-2) + " puppets!");
 			}
 		});
 		
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Message.Log.send(Message.Log.EVENT, "Reset");
 				Message.ConfirmDialoge dialoge = new Message.ConfirmDialoge("Are you sure you want to delete all puppets?");
 				if(dialoge.confirmed()) {
 					Save.reset();
@@ -110,5 +105,9 @@ public class Application extends JFrame {
 
 	public static JTabbedPane getTabbedPane() {
 		return tabbedPane;
+	}
+	
+	public static JLabel getPuppetAmount() {
+		return lblPuppetNumber;
 	}
 }

@@ -53,13 +53,13 @@ public class Puppet extends JPanel {
 		lblPuppetinessValue.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		this.add(btnSave, "cell 4 9,grow");
-		this.add(lblName, "cell 4 1,grow");
-		this.add(lblPuppetinessValue, "cell 4 6,grow");
-		this.add(btnEditPuppetiness, "cell 4 7,grow");
-		this.add(lblPuppetiness, "cell 4 5,grow");
-		this.add(lblNameValue, "cell 4 2,grow");
-		this.add(btnEditName, "cell 4 3,grow");
-		this.add(btnDelete, "cell 4 10,alignx center");
+		this.add(lblName, "cell 4 1,alignx center,aligny bottom");
+		this.add(lblPuppetinessValue, "cell 4 6,alignx center,aligny top");
+		this.add(btnEditPuppetiness, "cell 4 7,alignx center,aligny top");
+		this.add(lblPuppetiness, "cell 4 5,alignx center,aligny bottom");
+		this.add(lblNameValue, "cell 4 2,alignx center,aligny top");
+		this.add(btnEditName, "cell 4 3,alignx center,aligny top");
+		this.add(btnDelete, "cell 4 10,alignx center,aligny center");
 		
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -73,6 +73,7 @@ public class Puppet extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Save.clear(getID());
 				Application.getTabbedPane().removeTabAt(Application.getTabbedPane().getSelectedIndex());
+				Application.getPuppetAmount().setText("You have " + (Application.getTabbedPane().getTabCount()-2) + " puppets!");
 			}
 		});
 		btnEditPuppetiness.addActionListener(new ActionListener() {

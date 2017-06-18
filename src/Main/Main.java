@@ -9,7 +9,6 @@ public class Main {
 			public void run() {
 				//try {
 					Application frame = new Application();
-					frame = new Application();
 					frame.setVisible(true);
 				//} catch (Exception e) {
 					//System.out.println(e.getCause());
