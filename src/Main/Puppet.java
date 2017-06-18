@@ -33,7 +33,7 @@ public class Puppet extends JPanel {
 	
 	public Puppet(Puppet p) {
 		super();
-		//this.id = p.getID();
+		this.id = p.getID();
 		this.p = p.getPuppetiness();
 		this.name = p.getName();
 		

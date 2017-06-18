@@ -21,7 +21,7 @@ public class Save {
 			
 			save.writeInt(list.size());
 			for(int i = 0; i < list.size(); i++)
-				save.writeObject(list.get(i));
+				save.writeObject((Object) list.get(i));
 			save.close();
 			Message.Log.MESSAGE.send("Save completed.");
 			
@@ -43,7 +43,7 @@ public class Save {
 			for(int i = 0; i < n; i++) {
 				Object in = load.readObject();
 				if(in != null)
-				list.add(new Puppet((Puppet) in));
+				list.add(new Puppet(((Puppet) in)));
 			}
 			load.close();
 			
@@ -53,7 +53,8 @@ public class Save {
 		} catch (IOException e) {
 			Message.Log.ERROR.send("IO Exception thrown at load.");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();	
+			e.printStackTrace();
+		}
 	}
 	
 	public static void loadTabs() {
