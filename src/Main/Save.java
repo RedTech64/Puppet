@@ -13,9 +13,9 @@ public class Save {
 	static List<Puppet> list = new ArrayList<Puppet>();
 	
 	public static void save() {
-		Message.Log.send(Message.Log.MESSAGE, "Saving Puppet List " + list);
+		Message.Log.MESSAGE.send("Saving Puppet List " + list);
 		try {
-			Message.Log.send(Message.Log.MESSAGE, "Save started...");
+			Message.Log.MESSAGE.send("Save started...");
 			FileOutputStream file = new FileOutputStream("save.puppet");
 			ObjectOutputStream save = new ObjectOutputStream(file);
 			
@@ -23,7 +23,7 @@ public class Save {
 			for(int i = 0; i < list.size(); i++)
 				save.writeObject(list.get(i));
 			save.close();
-			Message.Log.send(Message.Log.MESSAGE, "Save completed.");
+			Message.Log.MESSAGE.send("Save completed.");
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class Save {
 	
 	public static void load() {
 		try {
-			Message.Log.send(Message.Log.MESSAGE, "Loading started...");
+			Message.Log.MESSAGE.send("Loading started...");
 			FileInputStream file = new FileInputStream("save.puppet");
 			ObjectInputStream load = new ObjectInputStream(file);
 			
@@ -47,18 +47,17 @@ public class Save {
 			}
 			load.close();
 			
-			Message.Log.send(Message.Log.MESSAGE, "Loading completed.");
+			Message.Log.MESSAGE.send("Loading completed.");
 		} catch (FileNotFoundException e) {
-			Message.Log.send(Message.Log.WARNING, "Save file not found!");
+			Message.Log.WARNING.send("Save file not found!");
 		} catch (IOException e) {
-			Message.Log.send(Message.Log.ERROR, "IO Exception thrown at load.");
+			Message.Log.ERROR.send("IO Exception thrown at load.");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+			e.printStackTrace();	
 	}
 	
 	public static void loadTabs() {
-		Message.Log.send(Message.Log.MESSAGE, "Loading tabs...");
+		Message.Log.MESSAGE.send("Loading tabs...");
 		Save.load();
 		List<Puppet> list = Save.getList();
 		
@@ -66,7 +65,7 @@ public class Save {
 			Application.getTabbedPane().add(p);
 		}
 		
-		Message.Log.send(Message.Log.MESSAGE, "Loading tabs completed.");
+		Message.Log.MESSAGE.send("Loading tabs completed.");
 	}
 	
 	public static void reset() {

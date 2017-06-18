@@ -75,19 +75,23 @@ public class Puppet extends JPanel {
 				Application.getTabbedPane().removeTabAt(Application.getTabbedPane().getSelectedIndex());
 				Application.getPuppetAmount().setText("You have " + (Application.getTabbedPane().getTabCount()-2) + " puppets!");
 				Save.save();
+				Message.Log.EVENT.send("Puppet " + name + " deleted.");
 			}
 		});
 		btnEditPuppetiness.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				p = PuppetinessInput.getName();
 				lblPuppetinessValue.setText(p+"%");
+				Message.Log.EVENT.send("Puppet " + name + " puppetiness value changed to " + p+"%");
 			}
 		});
 		
 		btnEditName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String oldName = name;
 				name = NameInput.getName();
 				lblNameValue.setText(name);
+				Message.Log.EVENT.send("Puppet " + oldName + " changed to " + name + ".");
 			}
 		});
 	}

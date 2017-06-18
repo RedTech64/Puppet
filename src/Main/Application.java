@@ -82,7 +82,7 @@ public class Application extends JFrame {
 		//Listeners
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			Message.Log.send(Message.Log.EVENT, "Create Puppet");
+			Message.Log.EVENT.send("Create Puppet");
 			Puppet tab = new Puppet();
 				tabbedPane.add(tab);
 				Save.add(tab);
@@ -92,7 +92,7 @@ public class Application extends JFrame {
 		
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Message.Log.send(Message.Log.EVENT, "Reset");
+				Message.Log.EVENT.send("Reset");
 				Message.ConfirmDialoge dialoge = new Message.ConfirmDialoge("Are you sure you want to delete all puppets?");
 				if(dialoge.confirmed()) {
 					Save.reset();
