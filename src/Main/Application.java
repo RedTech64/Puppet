@@ -83,7 +83,7 @@ public class Application extends JFrame {
 		tabSettings.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][]"));
 		tabbedPane.addTab("Settings", null, tabSettings, null);
 		btnReset.setFont(new Font("Tahoma", Font.BOLD, 20));
-		tabSettings.add(btnReset, "cell 4 7,growx,aligny center");
+		tabSettings.add(btnReset, "cell 4 7,growx");
 		
 		Save.loadTabs();
 		
@@ -98,9 +98,10 @@ public class Application extends JFrame {
 		
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Save.reset();
-				JFrame optionPane = new JFrame();
-				JOptionPane.showMessageDialog(optionPane, "Deleted all Puppets.");
+				Message.ConfirmDialoge dialoge = new Message.ConfirmDialoge("Are you sure you want to delete all puppets?");
+				if(dialoge.confirmed()) {
+					Save.reset();
+				}
 			}
 		});
 		

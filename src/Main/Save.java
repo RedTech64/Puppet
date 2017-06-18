@@ -13,6 +13,7 @@ public class Save {
 	static List<Puppet> list = new ArrayList<Puppet>();
 	
 	public static void save() {
+		Message.Log.send(Message.Log.MESSAGE, "Saving Puppet List " + list);
 		try {
 			FileOutputStream file = new FileOutputStream("save.puppet");
 			ObjectOutputStream save = new ObjectOutputStream(file);
@@ -23,9 +24,9 @@ public class Save {
 			save.close();
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -37,8 +38,11 @@ public class Save {
 			
 			int n = load.readInt();
 			
-			for(int i = 0; i < n; i++)
-				list.add(new Puppet((Puppet) load.readObject()));
+			for(int i = 0; i < n; i++) {
+				Object in = load.readObject();
+				if(in != null)
+				list.add(new Puppet((Puppet) in));
+			}
 			
 			load.close();
 		} catch (FileNotFoundException e) {
@@ -60,6 +64,8 @@ public class Save {
 	}
 	
 	public static void reset() {
+		for(Puppet p : list)
+			Application.getTabbedPane().remove(p);
 		list.clear();
 		save();
 	}
@@ -68,12 +74,8 @@ public class Save {
 		list.add(p);
 	}
 	
-	public static int getID() {
-		return list.size();
-	}
-	
 	public static void clear(int i) {
-		list.set(i, null);
+		list.remove(i);
 	}
 	
 	public static void update(Puppet p) {
@@ -82,5 +84,9 @@ public class Save {
 	
 	public static List<Puppet> getList() {
 		return list;
+	}
+	
+	public static int getID() {
+		return list.size();
 	}
 }

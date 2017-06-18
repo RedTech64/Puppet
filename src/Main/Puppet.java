@@ -14,20 +14,26 @@ import java.awt.event.ActionEvent;
 public class Puppet extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String name;
-	private int p;
+	private String name = "";
+	private int p = 0;
 	private JButton btnSave = new JButton("Save");
 	private JLabel lblPuppetiness = new JLabel("Puppetiness");
 	private JLabel lblName = new JLabel("Puppet Name");
-	private JLabel lblNameValue = new JLabel("Name Puppet");
+	private JLabel lblNameValue = new JLabel("New Puppet");
 	private JLabel lblPuppetinessValue = new JLabel("50%");
 	private JButton btnEditName = new JButton("Edit Name");
 	private JButton btnEditPuppetiness = new JButton("Edit Puppetiness");
 	private JButton btnDelete = new JButton("Delete Puppet");
 	
+	public Puppet() {
+		super();
+		id = Save.getID();
+		launch();
+	}
+	
 	public Puppet(Puppet p) {
 		super();
-		this.id = p.getID();
+		//this.id = p.getID();
 		this.p = p.getPuppetiness();
 		this.name = p.getName();
 		
@@ -35,17 +41,10 @@ public class Puppet extends JPanel {
 		lblPuppetinessValue.setText(this.p+"%");
 		setName(name);
 		
-		init();
+		launch();
 	}
 	
-	public Puppet() {
-		super();
-		id = Save.getID();
-		
-		init();
-	}
-	
-	public void init() {
+	public void launch() {
 		this.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
 		
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -65,6 +64,7 @@ public class Puppet extends JPanel {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setName(name);
+				Application.getTabbedPane().setTitleAt(Application.getTabbedPane().getSelectedIndex(), name);
 				Save.save();
 			}
 		});
